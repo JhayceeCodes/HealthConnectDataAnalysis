@@ -1,4 +1,4 @@
-# Project Summary
+# Week 4 Project Summary
 
 ## 1. Problem
 
@@ -14,6 +14,7 @@ The Week 4 analysis was based on:
 - **HealthConnect Data Dictionary** — definitions and context for the dataset variables.
 - **Python** — primary analytical environment.
 - **Pandas** — data loading, validation, and exploratory analysis.
+- **Matplotlib / Seaborn** — planned for exploratory visualisation.
 
 ## 3. Key Observations
 
