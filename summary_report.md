@@ -14,7 +14,6 @@ The Week 4 analysis was based on:
 - **HealthConnect Data Dictionary** — definitions and context for the dataset variables.
 - **Python** — primary analytical environment.
 - **Pandas** — data loading, validation, and exploratory analysis.
-- **Matplotlib / Seaborn** — planned for exploratory visualisation.
 
 ## 3. Key Observations
 
@@ -27,7 +26,6 @@ Initial data-quality assessment identified:
 - `None` values in `reminder_channel` represent appointments where no reminder was sent.
 - Booking and appointment date fields require conversion to datetime for temporal analysis.
 
-These observations informed the proposed analytical questions and approach.
 
 ## 4. Proposed Approach
 
