@@ -1,6 +1,6 @@
 # Week 5 Project Summary 
 
-## 1. What I Planned to Accomplish in Week 5
+## What I Planned to Accomplish in Week 5
 
 Building on the analytical foundation established in Week 4, the goal for Week 5 was to move from planning into practical exploratory data analysis of the HealthConnect appointment dataset.
 
@@ -14,7 +14,7 @@ The planned activities were to:
 - Identify meaningful patterns and potential business opportunities.
 - Document limitations and translate the findings into recommendations.
 
-## 2. What I Actually Completed
+## What I Actually Completed
 
 During Week 5, I completed the initial exploratory analysis of the HealthConnect appointment dataset using **Python, Pandas, Matplotlib, Seaborn, and Jupyter Notebook**.
 
@@ -31,7 +31,7 @@ The work completed included:
 - Developed charts and tables to support the analysis.
 - Documented key findings, recommendations, limitations, and a conclusion in the analysis notebook.
 
-## 3. Key Findings and Development Outcomes
+## Key Findings and Development Outcomes
 
 The analysis produced several notable findings:
 
@@ -46,7 +46,7 @@ The analysis produced several notable findings:
 
 Overall, the analysis identified **previous no-show behaviour and reminder coverage as more notable areas for further attention**, while several other variables showed relatively weak differences across outcomes.
 
-## 4. Major Challenges Encountered
+## Major Challenges Encountered
 
 Several challenges were encountered during the analysis:
 
@@ -58,7 +58,7 @@ Several challenges were encountered during the analysis:
 
 These challenges reinforced the importance of using the data dictionary and analytical context when making data preparation and interpretation decisions.
 
-## 5. Important Decisions Made and Why
+## Important Decisions Made and Why
 
 ### Recoding Missing Reminder Channels
 
@@ -83,7 +83,7 @@ Not every variable was given a standalone chart. Tables were used where they com
 
 Observed relationships were treated as associations rather than evidence of causation. For example, the higher attendance proportion associated with SMS reminders does not establish that SMS itself causes higher attendance.
 
-## 6. Changes to the Week 4 Approach
+## Changes to the Week 4 Approach
 
 The overall Week 4 analytical direction was retained, but it was refined during implementation.
 
@@ -96,7 +96,7 @@ The main changes were:
 - Separate visualisations were not created for every variable. Tables were used where appropriate to avoid unnecessary charts.
 - The analysis was implemented as a **Python notebook rather than a dashboard**, keeping the initial analysis focused on exploration, interpretation, and documentation.
 
-## 7. Cross-Track Collaboration Completed
+## Cross-Track Collaboration Completed
 
 The Week 5 analysis was carried out within the broader HealthConnect project, where Data Analytics contributes alongside the other professional tracks.
 
@@ -110,7 +110,7 @@ From the Data Analytics perspective, the completed work provides:
 
 No specific cross-track implementation was completed during this stage. The main contribution was providing analytical findings and context that can support subsequent work across the HealthConnect project.
 
-## 8. Remaining Work
+## Remaining Work
 
 The Week 5 analysis provides an initial analytical baseline, but several activities remain:
 
@@ -122,7 +122,7 @@ The Week 5 analysis provides an initial analytical baseline, but several activit
 - Prepare the analysis for integration with subsequent HealthConnect project stages.
 - Further investigate factors associated with repeated no-shows where appropriate.
 
-## 9. Proposed Focus for Week 6
+## Proposed Focus for Week 6
 
 For Week 6, the focus should move from initial EDA toward **deeper analysis and analytical refinement**.
 
