@@ -1,137 +1,180 @@
-# Week 5 Project Summary 
+# Week 6 Project Summary
 
-## What I Planned to Accomplish in Week 5
+## What I Planned to Accomplish in Week 6
 
-Building on the analytical foundation established in Week 4, the goal for Week 5 was to move from planning into practical exploratory data analysis of the HealthConnect appointment dataset.
+Building on the initial EDA completed in Week 5, the goal for Week 6 was to move toward **deeper analysis, findings validation, and cross-track integration**.
 
 The planned activities were to:
 
-- Prepare and validate the dataset for analysis.
-- Explore appointment outcomes and attendance patterns.
-- Investigate the business questions defined in Week 4.
-- Calculate and evaluate the proposed KPIs.
-- Develop relevant visualisations to communicate the findings.
-- Identify meaningful patterns and potential business opportunities.
-- Document limitations and translate the findings into recommendations.
+- Further investigate the factors associated with appointment no-shows.
+- Validate the strongest findings identified during Week 5.
+- Examine relationships between multiple appointment and patient characteristics.
+- Evaluate reminder coverage and effectiveness within higher-risk appointment segments.
+- Review and refine the existing KPI framework.
+- Translate validated findings into more targeted business recommendations.
+- Provide relevant analytical findings to the Data Science track for further modelling.
+- Document the analytical handoff and prepare requirements for Week 7 testing.
 
 ## What I Actually Completed
 
-During Week 5, I completed the initial exploratory analysis of the HealthConnect appointment dataset using **Python, Pandas, Matplotlib, Seaborn, and Jupyter Notebook**.
+During Week 6, I extended the HealthConnect analysis beyond the initial EDA by focusing on **booking lead time, previous no-show behaviour, reminder coverage, and higher-risk appointment segments**.
 
 The work completed included:
 
-- Validated the dataset structure and data types.
-- Confirmed the dataset contains **5,000 appointment records across 18 variables**.
-- Checked for duplicates and inconsistent categorical values.
-- Investigated missing values in `distance_to_clinic_km` and `waiting_time_minutes`.
-- Converted date fields to appropriate datetime formats.
-- Recoded missing `reminder_channel` values as **"No reminder"**, based on the data dictionary definition that missing values represent appointments where no reminder was sent.
-- Conducted exploratory analysis across appointment outcomes, reminders, previous no-shows, appointment timing, appointment type, waiting time, age group, and distance to clinic.
-- Calculated and reviewed the proposed KPIs.
-- Developed charts and tables to support the analysis.
-- Documented key findings, recommendations, limitations, and a conclusion in the analysis notebook.
+- Investigated the relationship between booking lead time and appointment outcomes.
+- Grouped booking lead time into meaningful intervals to compare outcome distributions.
+- Examined booking lead time alongside previous no-show history.
+- Identified higher-risk appointment segments based on combinations of booking lead time and previous no-show behaviour.
+- Evaluated reminder coverage across different booking lead-time groups.
+- Examined reminder effectiveness within the identified higher-risk segments.
+- Reviewed and validated the existing KPI set against the deeper findings.
+- Conducted Chi-square tests and calculated Cramér's V to statistically validate key relationships.
+- Refined the key findings and business recommendations based on the additional analysis.
+- Documented analytical inputs for handoff to the Data Science track.
+- Defined analytical testing requirements for Week 7.
 
 ## Key Findings and Development Outcomes
 
-The analysis produced several notable findings:
+The deeper analysis produced several important refinements to the Week 5 findings.
 
-- **No-shows are the most common appointment outcome**, accounting for approximately **47.5%** of appointments, slightly above attended appointments at approximately 46.2%.
-- **Previous no-show behaviour shows a strong association with future no-shows.** The current no-show rate increases from approximately **43.5% for patients with no previous no-shows to 68.0% among patients with three previous no-shows**.
-- **Reminder coverage is incomplete.** Approximately **27.3% of appointments did not receive a recorded reminder**.
-- Attendance proportions varied modestly across reminder channels, with **SMS showing the highest attendance proportion at approximately 50%**, followed by Email, WhatsApp, and the no-reminder group. The differences were not large enough to conclude that one channel is substantially more effective.
-- Appointment demand is concentrated in the **morning and afternoon**, while evening appointments have considerably lower volumes.
-- **Waiting times show limited differentiation across appointment outcomes**, with median waiting times generally falling within approximately 22–24 minutes.
-- Appointment outcomes are broadly similar across appointment types and age groups.
-- Distance to the clinic showed slightly higher median values for no-shows and cancellations than attended appointments, but the distributions overlapped considerably.
+- **Booking lead time showed a clear relationship with appointment outcomes.** No-show rates increased consistently as booking lead time increased, rising from approximately **24% for appointments booked 0–2 days in advance to 60% for appointments booked 31+ days in advance**.
 
-Overall, the analysis identified **previous no-show behaviour and reminder coverage as more notable areas for further attention**, while several other variables showed relatively weak differences across outcomes.
+- **The booking lead time relationship was statistically significant.** The Chi-square test produced a p-value below 0.001, while Cramér's V of **0.185** indicated a modest association.
+
+- **Previous no-show history remained relevant.** The relationship between previous no-shows and current appointment outcomes was statistically significant, although the Cramér's V of **0.091** indicated a relatively weak association.
+
+- **Combining booking lead time and previous no-show history revealed higher-risk segments.** The highest observed no-show rates were concentrated among appointments with longer booking lead times, particularly when previous no-show history was also present.
+
+- **Long booking lead time was relevant even among patients without previous no-shows.** This suggests that previous no-show history alone does not capture all of the variation in no-show behaviour.
+
+- **Reminder coverage remained incomplete.** Approximately **27% of appointments had no recorded reminder**, and reminder coverage was relatively consistent across booking lead-time groups.
+
+- **Reminder coverage appeared more important than channel differences within the higher-risk segments.** The no-reminder group recorded a no-show rate of approximately **61%**, compared with approximately **55% for SMS**, while differences between the individual reminder channels remained relatively modest.
+
+- **The Week 5 reminder finding was therefore refined.** Although SMS had the highest attendance proportion, the analysis does not provide sufficient evidence to conclude that SMS is substantially more effective than other channels.
+
+- **Not all variables were strong differentiators of appointment outcomes.** Waiting time, age group, appointment type, and distance to the clinic showed relatively limited differences or substantial overlap across outcomes.
+
+Overall, the Week 6 analysis shifted the focus from simply identifying individual factors toward **considering booking lead time, previous no-show behaviour, and reminder coverage together when designing targeted interventions**.
 
 ## Major Challenges Encountered
 
-Several challenges were encountered during the analysis:
+Several challenges were encountered during the deeper analysis:
 
-- Determining how missing values in `reminder_channel` should be interpreted. The missing values were initially not represented as the literal string `"None"`, requiring reference to the data dictionary before recoding them as **"No reminder"**.
-- Deciding which variables warranted visualisation and which were better represented using tables or descriptive statistics.
-- Interpreting differences between groups without overstating them as causal relationships.
-- Balancing the number of visualisations with the need to keep the notebook focused on the defined business questions.
-- Determining how to treat missing observations in `distance_to_clinic_km` and `waiting_time_minutes` without introducing assumptions through unnecessary imputation.
+- Determining how to define higher-risk appointment segments without introducing an arbitrary risk threshold.
 
-These challenges reinforced the importance of using the data dictionary and analytical context when making data preparation and interpretation decisions.
+- Interpreting combinations of booking lead time and previous no-show history while accounting for smaller segment sizes.
+
+- Distinguishing statistical significance from practical significance when validating relationships.
+
+- Avoiding causal interpretations when comparing reminder outcomes across observational groups.
+
+- Deciding how far to extend the analysis without unnecessarily duplicating the visualisations and findings already established during Week 5.
+
+- Determining how the analytical findings could provide useful inputs to the Data Science track without presenting the analysis as a predictive model.
+
+These challenges reinforced the importance of combining **descriptive analysis, statistical validation, practical interpretation, and appropriate limitations** when developing business insights.
 
 ## Important Decisions Made and Why
 
-### Recoding Missing Reminder Channels
+### Focusing on Booking Lead Time
 
-Missing `reminder_channel` values were recoded as **"No reminder"** rather than treated as an unknown category because the data dictionary explicitly defines missing values as indicating that no reminder was sent.
+Booking lead time was introduced as an additional analytical dimension during Week 6 after the initial EDA showed the need to investigate other factors that could help explain differences in no-show behaviour.
 
-### Reducing the KPI Set
+The variable showed a consistent increase in no-show rates across longer booking intervals and therefore provided a useful basis for deeper analysis.
 
-The initial KPI consideration included appointment volume. This was removed from the final KPI set because total appointment volume is primarily a descriptive measure already covered through exploratory analysis rather than a strong KPI linked to the core business questions.
+### Combining Booking Lead Time with Previous No-Shows
 
-The final KPI set focused on:
+Rather than examining previous no-show behaviour independently, booking lead time was analysed alongside previous no-show history.
 
-- No-Show Rate
-- Reminder Effectiveness Rate
-- Reminder Non-send Rate
-- Average Waiting Time
+This helped identify combinations of characteristics associated with substantially higher observed no-show rates and provided a more useful basis for targeted intervention.
 
-### Focusing Visualisations on Analytical Questions
+### Refining the Reminder Strategy Finding
 
-Not every variable was given a standalone chart. Tables were used where they communicated the information more effectively, while visualisations were prioritised for comparisons and patterns that benefited from graphical representation.
+The Week 5 analysis suggested that SMS had the highest attendance proportion among reminder channels.
 
-### Avoiding Causal Conclusions
+Week 6 analysis refined this finding by examining reminder outcomes within higher-risk segments. While SMS continued to have the lowest observed no-show rate among the channels, the differences were relatively modest.
 
-Observed relationships were treated as associations rather than evidence of causation. For example, the higher attendance proportion associated with SMS reminders does not establish that SMS itself causes higher attendance.
+As a result, the recommendation shifted from selecting a single "best" channel toward **improving reminder coverage and investigating targeted reminder strategies**.
 
-## Changes to the Week 4 Approach
+### Validating Key Relationships Statistically
 
-The overall Week 4 analytical direction was retained, but it was refined during implementation.
+Chi-square tests and Cramér's V were introduced to determine whether the key relationships observed during the analysis were statistically supported and to assess their strength.
 
-The main changes were:
+This provided additional evidence while avoiding reliance on visual differences alone.
 
-- The analysis moved from the proposed exploratory plan into a more focused **question → analysis → visualisation → observation** structure.
-- Appointment volume was removed from the KPI set and retained as an EDA/descriptive metric.
-- Some proposed areas were deprioritised where the initial analysis showed limited differentiation.
-- The analysis placed greater emphasis on **previous no-show behaviour and reminder coverage**, as these produced more meaningful findings.
-- Separate visualisations were not created for every variable. Tables were used where appropriate to avoid unnecessary charts.
-- The analysis was implemented as a **Python notebook rather than a dashboard**, keeping the initial analysis focused on exploration, interpretation, and documentation.
+### Keeping the Analysis Focused
 
-## Cross-Track Collaboration Completed
+Rather than repeating Week 5 charts or adding visualisations for every new calculation, Week 6 focused on analyses that directly contributed to findings validation, risk segmentation, reminder strategy, and cross-track integration.
 
-The Week 5 analysis was carried out within the broader HealthConnect project, where Data Analytics contributes alongside the other professional tracks.
+## Changes to the Week 5 Approach
 
-From the Data Analytics perspective, the completed work provides:
+The Week 5 analytical direction was retained but expanded in several ways:
 
-- Evidence-based findings on appointment attendance and no-show patterns.
-- Identified variables and patterns that may be relevant to future predictive analysis.
-- KPI definitions that can support broader project reporting.
-- Business recommendations that can inform potential interventions.
-- Documented limitations that should be considered by other tracks when using the dataset.
+- The analysis moved from primarily descriptive EDA toward **relationship analysis and statistical validation**.
 
-No specific cross-track implementation was completed during this stage. The main contribution was providing analytical findings and context that can support subsequent work across the HealthConnect project.
+- Booking lead time was introduced as an additional factor associated with appointment outcomes.
+
+- Previous no-show behaviour was analysed alongside booking lead time to identify higher-risk combinations.
+
+- Reminder effectiveness was evaluated within higher-risk segments rather than only across the overall dataset.
+
+- The interpretation of reminder channels was refined to avoid treating SMS as definitively superior.
+
+- The existing KPI set was reviewed rather than expanded unnecessarily.
+
+- Statistical testing was introduced for the two key relationships identified during the deeper analysis.
+
+- The analysis remained focused on evidence generation rather than attempting to build a predictive model within the Data Analytics track.
+
+## Cross-Track Contribution Completed
+
+### Data Analytics → Data Science
+
+The validated Week 6 findings were prepared as an analytical handoff to the **Data Science track** to support further modelling of appointment no-show behaviour.
+
+The handoff highlighted:
+
+- Booking lead time as a candidate feature, with the strongest association among the two key behavioural variables tested.
+- Previous no-show history as an additional candidate feature.
+- Higher-risk combinations of booking lead time and previous no-show history.
+- Reminder coverage as an important consideration, with approximately 27% of appointments having no recorded reminder.
+- Reminder channel performance within higher-risk segments, while noting that channel differences were relatively modest.
+
+These findings provide the Data Science team with **candidate variables and validated analytical patterns** to consider during feature selection, modelling, and model interpretation.
+
+> **Integration outcome:** The Data Analytics findings will serve as a baseline for comparing Data Science model outputs with the observed patterns identified through EDA and statistical analysis.
 
 ## Remaining Work
 
-The Week 5 analysis provides an initial analytical baseline, but several activities remain:
+Following the Week 6 analysis, the remaining work includes:
 
-- Refine and validate the final findings.
-- Review the recommendations against the analytical evidence.
-- Finalise the project documentation.
-- Update the GitHub README with the completed analysis and selected visualisations.
-- Organise the repository and supporting files.
-- Prepare the analysis for integration with subsequent HealthConnect project stages.
-- Further investigate factors associated with repeated no-shows where appropriate.
+- Complete the Data Science integration and review model outputs against the analytical findings.
+- Test the proposed reminder strategy using appropriate analytical or modelling approaches.
+- Further evaluate reminder coverage and channel effectiveness.
+- Assess whether the identified higher-risk segments remain consistent under predictive modelling.
+- Measure the practical impact of potential reminder interventions against the established baseline.
+- Finalise project documentation and repository updates.
+- Prepare the analytical outputs for the next stage of the HealthConnect project.
 
-## Proposed Focus for Week 6
+## Proposed Focus for Week 7
 
-For Week 6, the focus should move from initial EDA toward **deeper analysis and analytical refinement**.
+For Week 7, the focus should move from **identifying and validating patterns toward analytical testing and decision support**.
 
 The proposed focus is to:
 
-1. Further investigate the relationship between previous no-show behaviour and current appointment outcomes.
-2. Examine reminder coverage and reminder-channel performance in greater detail.
-3. Explore whether combinations of factors provide stronger explanations of no-show behaviour than individual variables.
-4. Validate the strongest findings identified during Week 5.
-5. Translate the validated findings into more targeted business recommendations.
-6. Collaborate with the other HealthConnect tracks where the analytical findings can support their work.
-7. Prepare the analysis for the next stage of the overall HealthConnect project.
+1. **Validate the higher-risk segments** using additional statistical or modelling approaches.
+
+2. **Evaluate reminder strategies** within higher-risk appointment groups.
+
+3. **Test reminder coverage** to determine whether increased coverage is associated with improved appointment outcomes.
+
+4. **Compare reminder channels** while accounting for differences in patient and appointment characteristics where possible.
+
+5. **Review Data Science model outputs** against the relationships identified during Week 6.
+
+6. **Evaluate feature importance and model performance** to determine which variables provide useful predictive information.
+
+7. **Measure practical impact** using changes in no-show rate, attendance rate, and reminder coverage where intervention/test data becomes available.
+
+The overall objective is to move HealthConnect from **identifying higher-risk patterns toward testing whether targeted interventions can produce measurable improvements in appointment attendance**.
