@@ -1,8 +1,8 @@
 # HealthConnect Appointment Analysis
 
-Exploratory data analysis of the HealthConnect appointment dataset, focused on understanding appointment attendance, identifying patterns associated with no-shows, and generating actionable business insights.
+Exploratory and advanced analysis of the HealthConnect appointment dataset, focused on understanding appointment attendance, identifying patterns associated with no-shows, validating key relationships, and generating actionable business insights.
 
-This project forms part of the **Data Analytics track at Analyst Lab Africa**, using Python to move from initial data assessment and analytical planning into exploratory analysis and insight generation.
+This project forms part of the **Data Analytics track at Analyst Lab Africa**, using Python to move from initial data assessment and analytical planning into exploratory analysis, deeper analytical validation, and decision support.
 
 ---
 
@@ -12,7 +12,10 @@ The analysis focuses on understanding:
 
 - Appointment attendance and no-show patterns.
 - The relationship between previous no-show behaviour and current outcomes.
+- The relationship between booking lead time and appointment outcomes.
 - Appointment attendance across reminder channels and appointments without reminders.
+- Reminder coverage across different booking lead-time groups.
+- Higher-risk appointment segments based on booking lead time and previous no-show behaviour.
 - Appointment demand across days and time periods.
 - Waiting time and its relationship with appointment outcomes.
 - Differences in outcomes across appointment types and patient characteristics.
@@ -61,9 +64,14 @@ The workflow included:
 4. Exploratory data analysis.
 5. KPI calculation.
 6. Comparative analysis across relevant variables.
-7. Visualisation and interpretation.
-8. Business insight generation.
-9. Recommendations and limitation assessment.
+7. Deeper analysis of booking lead time and previous no-show behaviour.
+8. Higher-risk segment analysis.
+9. Reminder coverage and effectiveness analysis.
+10. Statistical validation using Chi-square tests and Cramér's V.
+11. Visualisation and interpretation.
+12. Business insight generation.
+13. Recommendations and limitation assessment.
+14. Cross-track analytical handoff to Data Science.
 
 Missing `reminder_channel` values were interpreted as **"No reminder"**, based on the dataset's data dictionary.
 
@@ -86,29 +94,70 @@ Missing `reminder_channel` values were interpreted as **"No reminder"**, based o
 
 No-shows represent approximately **47.5%** of all appointments, making them the most common appointment outcome.
 
-### 2. Previous no-shows are strongly associated with future no-shows
+### 2. Booking lead time is associated with no-show behaviour
 
-The no-show rate increases from approximately **43.5%** among patients with no previous no-shows to approximately **68.0%** among patients with three previous no-shows.
+No-show rates increased consistently as booking lead time increased.
 
-This suggests that previous attendance behaviour may be useful for identifying patients who require additional follow-up.
+Appointments booked **0–2 days in advance** had a no-show rate of approximately **24%**, compared with approximately **60%** for appointments booked **31+ days in advance**.
 
-### 3. Reminder coverage has room for improvement
+A Chi-square test confirmed a statistically significant association between booking lead time and appointment outcome (`p < 0.001`), with a Cramér's V of **0.185**, indicating a modest association.
 
-Approximately **27.3%** of appointments did not receive a recorded reminder.
+### 3. Previous no-show history remains relevant
 
-Attendance proportions varied across reminder channels, with SMS showing the highest attendance proportion at approximately **50%**. However, the differences between channels were relatively small, so the analysis does not establish that one channel is substantially more effective than another.
+Patients with previous no-shows generally showed higher current no-show rates.
 
-### 4. Appointment demand is concentrated in the morning and afternoon
+The relationship between previous no-show history and appointment outcome was statistically significant (`p < 0.001`), although the Cramér's V of **0.091** indicates a relatively weak association.
+
+This suggests that previous no-show behaviour can provide useful context when assessing appointment attendance, but should not be considered in isolation.
+
+### 4. Combining booking lead time and previous no-shows identifies higher-risk segments
+
+Combining booking lead time with previous no-show history revealed several appointment segments with substantially higher observed no-show rates.
+
+Longer booking lead times were associated with higher no-show rates even among patients without previous no-shows, while the combination of longer lead times and previous no-show history produced some of the highest observed rates.
+
+These segments should be treated as **higher-risk groups identified through the analysis**, rather than as formal predictive risk categories.
+
+### 5. Reminder coverage has room for improvement
+
+Approximately **27.3%** of appointments did not have a recorded reminder.
+
+Reminder coverage was relatively consistent across booking lead-time groups, with approximately 26–28% of appointments in each group having no recorded reminder.
+
+### 6. Reminder coverage may be more important than channel choice
+
+Within the higher-risk appointment segments analysed, the no-reminder group recorded a no-show rate of approximately **61%**, compared with approximately **55% for SMS**.
+
+Although SMS recorded the lowest no-show rate among the reminder channels in these segments, the differences between individual channels were relatively modest.
+
+Therefore, the analysis does not establish that one reminder channel is substantially more effective than another. The findings instead support further investigation into **reminder coverage and targeted reminder strategies**.
+
+### 7. Appointment demand is concentrated in the morning and afternoon
 
 Most appointments occur during the morning and afternoon, while evening appointment volumes are considerably lower.
 
 Daily appointment volumes are relatively similar, although **Monday morning** records the highest individual day-time appointment volume.
 
-### 5. Several factors show limited differentiation
+### 8. Several factors show limited differentiation
 
 Waiting time, appointment type, and age group show relatively similar outcome distributions across their respective categories.
 
 Distance to the clinic shows slightly higher median values for no-show and cancelled appointments, but the distributions overlap considerably.
+
+---
+
+## Statistical Validation
+
+Two key relationships identified during the deeper analysis were statistically tested:
+
+| Relationship | Chi-square | Cramér's V | Interpretation |
+|---|---:|---:|---|
+| Booking Lead Time × Appointment Outcome | 341.12 | 0.185 | Statistically significant, modest association |
+| Previous No-Shows × Appointment Outcome | 83.38 | 0.091 | Statistically significant, relatively weak association |
+
+Both relationships were statistically significant at `p < 0.001`.
+
+The results provide additional support for the patterns observed during the exploratory and deeper analysis. Booking lead time showed the stronger association of the two variables tested.
 
 ---
 
@@ -142,26 +191,79 @@ Shows how appointment demand is distributed across days of the week and time per
 
 ## Business Recommendations
 
-Based on the initial analysis:
+Based on the analysis:
 
-- **Improve reminder coverage** by reducing the proportion of appointments without reminders.
-- **Prioritise patients with previous no-shows** for targeted follow-up and additional confirmation.
-- **Investigate reasons for repeated no-shows** through patient feedback or targeted surveys.
+- **Improve reminder coverage** by reducing the proportion of appointments without recorded reminders.
+
+- **Prioritise targeted reminder interventions** for appointments with longer booking lead times and previous no-show history.
+
+- **Avoid relying on a single reminder channel.** Although SMS recorded the lowest no-show rate among reminder channels within the higher-risk segments, the differences between channels were relatively modest.
+
+- **Investigate reasons for repeated no-shows** through patient feedback or targeted surveys rather than assuming the underlying causes.
+
+- **Use booking lead time as an additional monitoring dimension** when identifying appointments that may require greater attention.
+
 - **Align staffing and resources with appointment demand**, particularly during morning and afternoon periods.
-- **Monitor attendance outcomes after interventions** to evaluate whether changes improve appointment attendance.
-- Continue investigating distance-related patterns before considering remote consultation as an intervention.
 
-These recommendations are based on observed associations in the dataset and should be validated with further analysis or real-world operational data.
+- **Monitor attendance outcomes after interventions** to determine whether changes in reminder coverage or strategy produce measurable improvements.
+
+These recommendations are based on observed associations in the dataset and should be validated through further testing, predictive modelling, or real-world operational data.
+
+---
+
+## Cross-Track Contribution
+
+### Data Analytics → Data Science
+
+The validated Week 6 findings were prepared as an analytical handoff to the **Data Science track** to support further modelling of appointment no-show behaviour.
+
+The handoff highlighted:
+
+- Booking lead time as a candidate modelling feature.
+- Previous no-show history as an additional candidate feature.
+- Higher-risk combinations of booking lead time and previous no-show history.
+- Reminder coverage as an important consideration.
+- Reminder channel outcomes within higher-risk segments.
+
+The Data Analytics findings provide a baseline for the Data Science track to compare model-derived patterns against the relationships observed through EDA and statistical analysis.
 
 ---
 
 ## Limitations
 
-- The dataset is **synthetic and anonymised**, so findings may not fully represent real-world patient behaviour.
+- The dataset is **synthetic and anonymised**, so findings may not fully represent real-world patient behaviour or clinic operations.
+
 - The analysis identifies associations but does not establish causal relationships.
-- `distance_to_clinic_km` and `waiting_time_minutes` contain a small number of missing observations.
+
+- Some higher-risk segments contain relatively small numbers of appointments, making their observed rates more variable and requiring cautious interpretation.
+
+- Reminder channel comparisons may be influenced by differences in the types of patients or appointments receiving each channel.
+
 - Reminder data indicates the recorded reminder channel but does not establish whether a patient received, opened, or engaged with the reminder.
+
+- `distance_to_clinic_km` and `waiting_time_minutes` contain a small number of missing observations.
+
 - The dataset does not contain potentially relevant context such as reasons for missed appointments, patient satisfaction, health status, or socioeconomic circumstances.
+
+- The higher-risk segments identified in the analysis are not predictive risk classifications. Further modelling and validation are required before using them for automated risk prediction or intervention.
+
+---
+
+## Week 7 Next Steps
+
+The next stage of the analysis will focus on **analytical testing and decision support**.
+
+Planned activities include:
+
+- Validate the identified higher-risk segments using additional statistical or modelling approaches.
+- Evaluate reminder strategies within higher-risk appointment groups.
+- Test the relationship between reminder coverage and appointment outcomes.
+- Compare reminder channels while accounting for relevant patient and appointment characteristics where possible.
+- Review Data Science model outputs against the analytical findings.
+- Evaluate feature importance and model performance.
+- Measure practical changes in no-show rate, attendance rate, and reminder coverage where intervention or test data becomes available.
+
+The overall objective is to move from **identifying and validating higher-risk patterns toward testing whether targeted interventions can produce measurable improvements in appointment attendance**.
 
 ---
 
@@ -169,10 +271,13 @@ These recommendations are based on observed associations in the dataset and shou
 
 ```text
 .
+
 ├── README.md
+
 ├── data
 │   ├── HealthConnect_Appointment_Data.csv
 │   └── HealthConnect_Data_Dictionary.xlsx
+
 ├── healthconnect_analysis.ipynb
+
 └── summary_report.md
-```
