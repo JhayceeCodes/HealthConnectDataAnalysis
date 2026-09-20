@@ -215,7 +215,8 @@ These recommendations are based on observed associations in the dataset and shou
 
 ### Data Analytics → Data Science
 
-The validated Week 6 findings were prepared as an analytical handoff to the **Data Science track** to support further modelling of appointment no-show behaviour.
+The validated Week 6 findings were provided to the **Data Science track** to
+support modelling of appointment no-show behaviour.
 
 The handoff highlighted:
 
@@ -225,7 +226,18 @@ The handoff highlighted:
 - Reminder coverage as an important consideration.
 - Reminder channel outcomes within higher-risk segments.
 
-The Data Analytics findings provide a baseline for the Data Science track to compare model-derived patterns against the relationships observed through EDA and statistical analysis.
+The Data Science team used these findings to develop and evaluate a no-show
+prediction model. The modelling results confirmed that **booking lead time and
+previous no-show history contained the main predictive signal** in the dataset,
+while a more complex feature set did not provide additional benefit.
+
+The modelling process also identified **`previous_no_show_rate`** as a useful
+derived feature for future analytical work.
+
+The resulting model achieved a ROC-AUC of approximately **0.69** and is
+intended for **risk ranking and triage rather than automated decision-making**.
+The Data Science findings provide a further basis for testing targeted
+reminder strategies in the next stage of the HealthConnect project.
 
 ---
 

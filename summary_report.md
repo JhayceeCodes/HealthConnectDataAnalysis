@@ -131,19 +131,35 @@ The Week 5 analytical direction was retained but expanded in several ways:
 
 ### Data Analytics → Data Science
 
-The validated Week 6 findings were prepared as an analytical handoff to the **Data Science track** to support further modelling of appointment no-show behaviour.
+The validated Week 6 findings were provided to the **Data Science track** to
+support modelling of appointment no-show behaviour.
 
 The handoff highlighted:
 
-- Booking lead time as a candidate feature, with the strongest association among the two key behavioural variables tested.
+- Booking lead time as a candidate feature, with the strongest association
+  among the two key behavioural variables tested.
 - Previous no-show history as an additional candidate feature.
 - Higher-risk combinations of booking lead time and previous no-show history.
-- Reminder coverage as an important consideration, with approximately 27% of appointments having no recorded reminder.
-- Reminder channel performance within higher-risk segments, while noting that channel differences were relatively modest.
+- Reminder coverage as an important consideration, with approximately 27% of
+  appointments having no recorded reminder.
+- Reminder channel performance within higher-risk segments, while noting that
+  channel differences were relatively modest.
 
-These findings provide the Data Science team with **candidate variables and validated analytical patterns** to consider during feature selection, modelling, and model interpretation.
+The Data Science team used these findings to develop and evaluate a no-show
+prediction model. The modelling results confirmed that **booking lead time and
+previous no-show history contained the main predictive signal** in the dataset,
+while a more complex feature set did not provide additional benefit.
 
-> **Integration outcome:** The Data Analytics findings will serve as a baseline for comparing Data Science model outputs with the observed patterns identified through EDA and statistical analysis.
+The modelling process also identified **`previous_no_show_rate`** as a useful
+derived feature for future analytical work.
+
+The resulting model achieved a ROC-AUC of approximately **0.69** and is intended
+for **risk ranking and triage rather than automated decision-making**.
+
+> **Integration outcome:** The Data Analytics findings were used to inform the
+> Data Science modelling process, while the modelling results provided further
+> validation and refinement of the analytical findings. The resulting insights
+> provide a basis for testing targeted reminder strategies in Week 7.
 
 ## Remaining Work
 
