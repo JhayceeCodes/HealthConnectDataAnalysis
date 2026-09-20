@@ -72,6 +72,10 @@ The workflow included:
 12. Business insight generation.
 13. Recommendations and limitation assessment.
 14. Cross-track analytical handoff to Data Science.
+15. Independent KPI and analytical finding validation.
+16. Visualisation validation and refinement.
+17. Cross-track model validation and analytical refinement.
+18. Retesting and final validation.
 
 Missing `reminder_channel` values were interpreted as **"No reminder"**, based on the dataset's data dictionary.
 
@@ -124,13 +128,13 @@ Approximately **27.3%** of appointments did not have a recorded reminder.
 
 Reminder coverage was relatively consistent across booking lead-time groups, with approximately 26–28% of appointments in each group having no recorded reminder.
 
-### 6. Reminder coverage may be more important than channel choice
+### 6. Reminder coverage and channel differences require further testing
 
 Within the higher-risk appointment segments analysed, the no-reminder group recorded a no-show rate of approximately **61%**, compared with approximately **55% for SMS**.
 
-Although SMS recorded the lowest no-show rate among the reminder channels in these segments, the differences between individual channels were relatively modest.
+Although SMS recorded the lowest no-show rate among the reminder channels in these segments, the differences between individual reminder channels were relatively modest.
 
-Therefore, the analysis does not establish that one reminder channel is substantially more effective than another. The findings instead support further investigation into **reminder coverage and targeted reminder strategies**.
+The findings therefore support improving reminder coverage and testing targeted reminder strategies, rather than selecting a single channel based on these observational results.
 
 ### 7. Appointment demand is concentrated in the morning and afternoon
 
@@ -191,13 +195,13 @@ Shows how appointment demand is distributed across days of the week and time per
 
 ## Business Recommendations
 
-Based on the analysis:
+Based on the validated analysis:
 
 - **Improve reminder coverage** by reducing the proportion of appointments without recorded reminders.
 
 - **Prioritise targeted reminder interventions** for appointments with longer booking lead times and previous no-show history.
 
-- **Avoid relying on a single reminder channel.** Although SMS recorded the lowest no-show rate among reminder channels within the higher-risk segments, the differences between channels were relatively modest.
+- **Avoid relying on a single reminder channel.** Although SMS recorded the lowest no-show rate among reminder channels within the higher-risk segments, the differences between channels were relatively modest and observational.
 
 - **Investigate reasons for repeated no-shows** through patient feedback or targeted surveys rather than assuming the underlying causes.
 
@@ -207,7 +211,7 @@ Based on the analysis:
 
 - **Monitor attendance outcomes after interventions** to determine whether changes in reminder coverage or strategy produce measurable improvements.
 
-These recommendations are based on observed associations in the dataset and should be validated through further testing, predictive modelling, or real-world operational data.
+These recommendations are based on observed associations and predictive signals in the dataset. They should be validated through controlled intervention testing or appropriate real-world operational data before drawing causal conclusions.
 
 ---
 
@@ -215,8 +219,7 @@ These recommendations are based on observed associations in the dataset and shou
 
 ### Data Analytics → Data Science
 
-The validated Week 6 findings were provided to the **Data Science track** to
-support modelling of appointment no-show behaviour.
+The validated Analytics findings were provided to the **Data Science track** for independent modelling validation.
 
 The handoff highlighted:
 
@@ -226,18 +229,23 @@ The handoff highlighted:
 - Reminder coverage as an important consideration.
 - Reminder channel outcomes within higher-risk segments.
 
-The Data Science team used these findings to develop and evaluate a no-show
-prediction model. The modelling results confirmed that **booking lead time and
-previous no-show history contained the main predictive signal** in the dataset,
-while a more complex feature set did not provide additional benefit.
+The Data Science track used these findings to develop and evaluate a no-show prediction model.
 
-The modelling process also identified **`previous_no_show_rate`** as a useful
-derived feature for future analytical work.
+The modelling confirmed that **booking lead time and previous no-show behaviour contained useful predictive signal**. Cross-track validation also identified a multicollinearity issue in the Week 6 candidate feature set, where `previous_appointments`, `previous_no_shows`, and the derived `previous_no_show_rate` were included simultaneously.
 
-The resulting model achieved a ROC-AUC of approximately **0.69** and is
-intended for **risk ranking and triage rather than automated decision-making**.
-The Data Science findings provide a further basis for testing targeted
-reminder strategies in the next stage of the HealthConnect project.
+Removing the collinear raw-count variables and retaining `previous_no_show_rate` corrected the coefficient direction from **-0.106 to +0.195**, while predictive performance remained effectively unchanged.
+
+Further testing showed that:
+
+- `booking_lead_group` was redundant for predictive modelling when continuous `booking_lead_days` was included.
+- An explicit interaction between `previous_no_show_rate` and `booking_lead_days` provided negligible additional predictive value.
+- Reminder variables provided statistically significant additional predictive information beyond lead time and patient history, while remaining non-causal evidence.
+
+The refined candidate feature set is:
+
+`booking_lead_days` + `previous_no_show_rate` + `is_new_patient` + `reminder_sent` + `reminder_channel`
+
+The cross-track validation therefore not only supported the analytical findings but also resulted in a refinement of the Data Science modelling approach.
 
 ---
 
@@ -261,21 +269,20 @@ reminder strategies in the next stage of the HealthConnect project.
 
 ---
 
-## Week 7 Next Steps
+## Week 8 Next Steps
 
-The next stage of the analysis will focus on **analytical testing and decision support**.
+The next stage of the HealthConnect project will focus on **Final Integration → Presentation**.
 
 Planned activities include:
 
-- Validate the identified higher-risk segments using additional statistical or modelling approaches.
-- Evaluate reminder strategies within higher-risk appointment groups.
-- Test the relationship between reminder coverage and appointment outcomes.
-- Compare reminder channels while accounting for relevant patient and appointment characteristics where possible.
-- Review Data Science model outputs against the analytical findings.
-- Evaluate feature importance and model performance.
-- Measure practical changes in no-show rate, attendance rate, and reminder coverage where intervention or test data becomes available.
+- Integrate the validated Analytics and Data Science outputs into the wider HealthConnect solution.
+- Consolidate the final KPIs, validated findings, and recommendations.
+- Ensure consistency between the analytical findings and the refined Data Science model.
+- Finalise dashboards, visualisations, and presentation materials.
+- Review project documentation across the different tracks.
+- Prepare and deliver the final HealthConnect project presentation.
 
-The overall objective is to move from **identifying and validating higher-risk patterns toward testing whether targeted interventions can produce measurable improvements in appointment attendance**.
+The overall objective is to move from **validated analytical work toward a coherent, integrated, and presentation-ready HealthConnect solution**.
 
 ---
 
@@ -283,13 +290,11 @@ The overall objective is to move from **identifying and validating higher-risk p
 
 ```text
 .
-
 ├── README.md
-
 ├── data
 │   ├── HealthConnect_Appointment_Data.csv
 │   └── HealthConnect_Data_Dictionary.xlsx
-
 ├── healthconnect_analysis.ipynb
-
+├── healthconnect_testing.ipynb
 └── summary_report.md
+```
