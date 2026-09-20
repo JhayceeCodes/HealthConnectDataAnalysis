@@ -92,7 +92,7 @@ Missing `reminder_channel` values were interpreted as **"No reminder"**, based o
 
 ### 1. No-shows are a major attendance challenge
 
-No-shows represent approximately **47.5%** of all appointments, making them the most common appointment outcome.
+No-shows represent approximately **48%** of all appointments, making them the most common appointment outcome.
 
 ### 2. Booking lead time is associated with no-show behaviour
 
