@@ -1,5 +1,7 @@
 # HealthConnect Appointment Analysis
 
+📊 [View Presentation Slides](https://canva.link/w7blovu3g4iwzug) 
+
 ## Table of Contents
 
 1. [Background and Overview](#1-background-and-overview)
